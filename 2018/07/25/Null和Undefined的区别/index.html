@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="aaa">
+<meta name="description" content="首先看一个判断题：null和undefined 是否相等12console.log(null==undefined)	//trueconsole.log(null===undefined)	//false   观察可以发现：null和undefined 两者相等，但是当两者做全等比较时，两者又不等。">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript之原型和原型链">
-<meta property="og:url" content="https://renxiaojian.github.io/2018/07/24/javascript之原型和原型链/index.html">
+<meta property="og:title" content="Null和Undefined的区别">
+<meta property="og:url" content="https://renxiaojian.github.io/2018/07/25/Null和Undefined的区别/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="aaa">
+<meta property="og:description" content="首先看一个判断题：null和undefined 是否相等12console.log(null==undefined)	//trueconsole.log(null===undefined)	//false   观察可以发现：null和undefined 两者相等，但是当两者做全等比较时，两者又不等。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-24T15:17:28.071Z">
+<meta property="og:updated_time" content="2018-07-25T13:53:05.550Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript之原型和原型链">
-<meta name="twitter:description" content="aaa">
+<meta name="twitter:title" content="Null和Undefined的区别">
+<meta name="twitter:description" content="首先看一个判断题：null和undefined 是否相等12console.log(null==undefined)	//trueconsole.log(null===undefined)	//false   观察可以发现：null和undefined 两者相等，但是当两者做全等比较时，两者又不等。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://renxiaojian.github.io/2018/07/24/javascript之原型和原型链/"/>
+  <link rel="canonical" href="https://renxiaojian.github.io/2018/07/25/Null和Undefined的区别/"/>
 
 
 
 
 
-  <title>javascript之原型和原型链 | Hexo</title>
+  <title>Null和Undefined的区别 | Hexo</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://renxiaojian.github.io/2018/07/24/javascript之原型和原型链/">
+    <link itemprop="mainEntityOfPage" href="https://renxiaojian.github.io/2018/07/25/Null和Undefined的区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="剑剑Zz">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">javascript之原型和原型链</h1>
+          <h1 class="post-title" itemprop="name headline">Null和Undefined的区别</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-24T22:44:34+08:00">
-                2018-07-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-25T21:46:25+08:00">
+                2018-07-25
               </time>
             
 
@@ -305,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
+                  <a href="/categories/javascript那些事/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript那些事</span>
                   </a>
                 </span>
 
@@ -342,7 +342,36 @@
       
 
       
-        <p>aaa</p>
+        <blockquote>
+<p>首先看一个判断题：null和undefined 是否相等<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(null==undefined)	//true</span><br><span class="line">console.log(null===undefined)	//false</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>观察可以发现：null和undefined 两者相等，但是当两者做全等比较时，两者又不等。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Undefined类型"><a href="#Undefined类型" class="headerlink" title="Undefined类型"></a>Undefined类型</h2><p>只有一个值 <code>undefined</code> ，声明变量未初始化时，这个变量的值就是 <code>undefined</code>。</p>
+<p>对未初始化和未声明的变量执行 <code>typeof</code> 操作符都返回了 <code>undefined</code>。</p>
+<p>实际上，<code>undefined</code> 值是派生自 <code>null</code>值的，ECMAScript标准规定对二者进行相等性测试要返回true。</p>
+<h2 id="Null类型"><a href="#Null类型" class="headerlink" title="Null类型"></a>Null类型</h2><p>只有一个值 <code>null</code> ,即“空值”，代表一个空对象指针。使用 <code>typeof</code> 操作符运算得到 “object”。</p>
+<h2 id="最初设计"><a href="#最初设计" class="headerlink" title="最初设计"></a>最初设计</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(Number(null))		// 0</span><br><span class="line">console.log(Number(undefined))	// NaN</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>null是一个表示”无”的对象，转为数值时为 <code>0</code>；undefined是一个表示”无”的原始值，转为数值时为<code>NaN</code>。</p>
+</blockquote>
+<h2 id="典型用法"><a href="#典型用法" class="headerlink" title="典型用法"></a>典型用法</h2><blockquote>
+<p><code>null</code> 表示”没有对象”，即该处不应该有值。</p>
+</blockquote>
+<p>1.作为函数的参数，表示该函数的参数不是对象。</p>
+<p>2.作为对象原型链的终点。</p>
+<blockquote>
+<p><code>undefined</code> 表示”缺少值”，就是此处应该有一个值，但是还没有定义。</p>
+</blockquote>
+<p>1.变量被声明了，但没有赋值时，就等于undefined。</p>
+<p>2.调用函数时，应该提供的参数没有提供，该参数等于undefined。</p>
+<p>3.对象没有赋值的属性，该属性的值为undefined。</p>
+<p>4.函数没有返回值时，默认返回undefined。</p>
+<blockquote>
+<p>参考资料：阮一峰的网络日志 <a href="http://www.ruanyifeng.com/blog/2014/03/undefined-vs-null.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="noopener">undefined与null的区别</a></p>
+</blockquote>
 
       
     </div>
@@ -373,8 +402,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/19/javascript之创建对象/" rel="next" title="javascript之创建对象">
-                <i class="fa fa-chevron-left"></i> javascript之创建对象
+              <a href="/2018/07/25/javascript之数据类型/" rel="next" title="javascript之数据类型">
+                <i class="fa fa-chevron-left"></i> javascript之数据类型
               </a>
             
           </div>
@@ -382,10 +411,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/25/javascript之数据类型/" rel="prev" title="javascript之数据类型">
-                javascript之数据类型 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -437,8 +462,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -502,6 +536,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Undefined类型"><span class="nav-number">1.</span> <span class="nav-text">Undefined类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Null类型"><span class="nav-number">2.</span> <span class="nav-text">Null类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最初设计"><span class="nav-number">3.</span> <span class="nav-text">最初设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#典型用法"><span class="nav-number">4.</span> <span class="nav-text">典型用法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
