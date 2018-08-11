@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="webpack,react,express," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="准备工作从package.json开始1npm init 创建工程目录 src               //源文件  components       //组件page             //页面、布局组件router           //路由views            //视图模板package.jsonwebpack.config.js">
+<meta name="keywords" content="webpack,react,express">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从一个package.json到开始构建单页面应用">
+<meta property="og:url" content="https://renxiaojian.github.io/2018/08/09/从一个package-json到开始构建单页面应用/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="准备工作从package.json开始1npm init 创建工程目录 src               //源文件  components       //组件page             //页面、布局组件router           //路由views            //视图模板package.jsonwebpack.config.js">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-11T14:12:31.010Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从一个package.json到开始构建单页面应用">
+<meta name="twitter:description" content="准备工作从package.json开始1npm init 创建工程目录 src               //源文件  components       //组件page             //页面、布局组件router           //路由views            //视图模板package.jsonwebpack.config.js">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://renxiaojian.github.io/2018/08/09/从一个package-json到开始构建单页面应用/"/>
+
+
+
+
+
+  <title>从一个package.json到开始构建单页面应用 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://renxiaojian.github.io/2018/08/09/从一个package-json到开始构建单页面应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="剑剑Zz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/logo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从一个package.json到开始构建单页面应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-09T22:36:28+08:00">
+                2018-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SPA单页面应用/" itemprop="url" rel="index">
+                    <span itemprop="name">SPA单页面应用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="从package-json开始"><a href="#从package-json开始" class="headerlink" title="从package.json开始"></a>从package.json开始</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+<h3 id="创建工程目录"><a href="#创建工程目录" class="headerlink" title="创建工程目录"></a>创建工程目录</h3><blockquote>
+<p>src               //源文件</p>
+<blockquote>
+<p>components       //组件<br>page             //页面、布局组件<br>router           //路由<br>views            //视图模板<br>package.json<br>webpack.config.js</p>
+</blockquote>
+</blockquote>
+<a id="more"></a>
+<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack@2 express</span><br><span class="line">clean-webpack-plugin </span><br><span class="line">webpack-dev-middleware </span><br><span class="line">webpack-hot-middleware </span><br><span class="line">html-webpack-plugin express</span><br></pre></td></tr></table></figure>
+<h2 id="创建一个基本的-Express-应用"><a href="#创建一个基本的-Express-应用" class="headerlink" title="创建一个基本的 Express 应用"></a>创建一个基本的 Express 应用</h2><blockquote>
+<p>大白话：nodejs搭建web服务器</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//app.js</span><br><span class="line">const express = require(&apos;express&apos;);</span><br><span class="line">const app = express();</span><br><span class="line"></span><br><span class="line">app.get(&apos;/&apos;, function (req, res) &#123;</span><br><span class="line">  res.send(&apos;Hello World!&apos;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(3000, function () &#123;</span><br><span class="line">    console.log(&apos;Example app listening on port 3000!\n&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node ./src/app.js</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>或者在package.json的scripts脚本中设置启动命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">	&quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span><br><span class="line">    &quot;server&quot;: &quot;node ./src/app.js&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$ npm run server	//启动</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>关于express不做过多介绍，有兴趣学习的。详见官方文档：<a href="http://www.expressjs.com.cn/" target="_blank" rel="noopener">Express-基于Node.js平台的web应用开发框架</a></p>
+</blockquote>
+<h2 id="webpack基本配置"><a href="#webpack基本配置" class="headerlink" title="webpack基本配置"></a>webpack基本配置</h2><blockquote>
+<p>webpack 是一个现代 JavaScript 应用程序的静态模块打包器。吧啦吧啦……</p>
+</blockquote>
+<blockquote>
+<p>感觉概念好无聊，官方文档已经很详尽了，本人就不多做赘述了。详见<a href="https://www.webpackjs.com/" target="_blank" rel="noopener">webpack官方中文文档</a></p>
+</blockquote>
+<h3 id="webpack最重要的就是入口和出口的配置了吧！"><a href="#webpack最重要的就是入口和出口的配置了吧！" class="headerlink" title="webpack最重要的就是入口和出口的配置了吧！"></a>webpack最重要的就是入口和出口的配置了吧！</h3><blockquote>
+<p>先上干货<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">   	entry: path.resolve(__dirname, &apos;src/main.js&apos;),</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, &apos;dist&apos;),</span><br><span class="line">        filename: &apos;[name].bundle.js&apos;,</span><br><span class="line">        publicPath: &apos;/&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">	module: &#123;</span><br><span class="line">        rules: [&#123;</span><br><span class="line">            test: /\.(less|css)$/,</span><br><span class="line">            use:[&apos;style-loader&apos;,&apos;css-loader&apos;, &apos;less-loader&apos;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>在package.json的scripts脚本中设置命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;webpack&quot;</span><br><span class="line"> 	&#125;</span><br><span class="line"></span><br><span class="line">$ npm run build		//启动命令：打包</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>结果：生成一个dist文件夹，里面有打包好的文件 <code>main.bundle.js</code></p>
+</blockquote>
+<h4 id="入口-entry"><a href="#入口-entry" class="headerlink" title="入口(entry)"></a>入口(entry)</h4><p>1.入口，即起点，“梦”开始的地方。</p>
+<p>2.单个入口语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 简写</span><br><span class="line">module.exports = &#123;</span><br><span class="line">	entry:&apos;./src/main.js&apos;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">	entry:&#123;</span><br><span class="line">		main:&apos;./src/main.js&apos;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.对象语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	entry:&#123;</span><br><span class="line">		main:&apos;./src/main.js&apos;，</span><br><span class="line">		vendors: &apos;./src/vendors.js&apos;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>应用：多入口配置可以满足比较中大型的项目开发，即多页面应用程序，多页应用能够复用入口起点之间的大量代码/模块。使用 CommonsChunkPlugin 为每个页面间的应用程序共享代码。</p>
+</blockquote>
+<h4 id="输出-output"><a href="#输出-output" class="headerlink" title="输出(output)"></a>输出(output)</h4><p>1.输出，即成果，并不是“梦”结束的地方，而是一个里程碑吧！</p>
+<p>2.用法:最低包括两个属性 <code>filename</code>，<code>path</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, &apos;dist&apos;),</span><br><span class="line">        filename: &apos;[name].bundle.js&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>配置多入口，会生成多个对应的打包文件</p>
+</blockquote>
+<p>3.补充一个常用的 <code>publicPath</code> 属性</p>
+<blockquote>
+<p>输出解析文件的目录。并不会对生成文件的路径造成影响，主要是对你的页面里面引入的资源的路径做对应的补全。常用于在生产模式下更新内嵌到css、html文件里的url值。</p>
+</blockquote>
+<h4 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h4><blockquote>
+<p>loader 让 <code>webpack</code> 能够去处理那些非 <code>JavaScript</code> 文件。</p>
+</blockquote>
+<blockquote>
+<p>webpack 的配置中 loader 有两个目标：</p>
+</blockquote>
+<p>1.<code>test</code> 属性，用于标识出应该被对应的 loader 进行转换的某个或某些文件。</p>
+<p>2.<code>use</code> 属性，表示进行转换时，应该使用哪个 loader。</p>
+<blockquote>
+<p>什么？打包后的css是放在 <code>.bundle.js</code> 里面的？一点都不好！</p>
+</blockquote>
+<blockquote>
+<p>解决：所以要做代码分离呀！请看下面，常用的插件【plugins】</p>
+</blockquote>
+<hr>
+<h3 id="几个项目开发必备插件【plugins】"><a href="#几个项目开发必备插件【plugins】" class="headerlink" title="几个项目开发必备插件【plugins】"></a>几个项目开发必备插件【plugins】</h3><p>我们打包好的js文件是提供给HTML用的，现在竟然没有html文件，但让我们可以提前在dist文件夹中提前写一个index.html。但是既然用到webpack打包工具，就应该发挥它最大的功能。webpack提供了生成HTML的插件 <code>html-webpack-plugin</code></p>
+<h4 id="html-webpack-plugin"><a href="#html-webpack-plugin" class="headerlink" title="html-webpack-plugin"></a>html-webpack-plugin</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);</span><br><span class="line"></span><br><span class="line">plugins: [</span><br><span class="line">       new HtmlWebpackPlugin(&#123;</span><br><span class="line">           title: &apos;首页&apos;,</span><br><span class="line">           filename: path.resolve(__dirname, &apos;dist/index.html&apos;),</span><br><span class="line">           template: path.resolve(__dirname, &apos;src/views/template.html&apos;)</span><br><span class="line">       &#125;)</span><br><span class="line">   ]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果不配置任何参数，或默认生成index.html，并引入打包后的外部资源js,css文件；</p>
+</blockquote>
+<blockquote>
+<p>介绍几个常用属性</p>
+</blockquote>
+<p>1.<code>filename</code> 文件名，默认为index.html，还可以指定输出目录位置。</p>
+<blockquote>
+<p>注意：</p>
+</blockquote>
+<p><1>.filename配置的html文件目录是相对于webpackConfig.output.path路径而言的，不是相对于当前项目目录结构的。</1></p>
+<p><2>.指定生成的html文件内容中的 <code>link</code> 和 <code>script</code> 路径是相对于生成目录下的，写路径的时候请写生成目录下的相对路径。</2></p>
+<p>2.<code>template</code> 引用的模板</p>
+<p>3.<code>title</code> 标题。不可覆盖模板中的标题。模板中设置<code>&lt;%= htmlWebpackPlugin.options.title %&gt;</code> 可取到。</p>
+<p>4.<code>minify</code> 是否压缩html</p>
+<p>5.<code>chunks</code> 在配置多个页面时，每个页面注入的thunk应该是不相同的，需要通过该配置为不同页面注入不同的thunk。</p>
+<h4 id="extract-text-webpack-plugin"><a href="#extract-text-webpack-plugin" class="headerlink" title="extract-text-webpack-plugin"></a>extract-text-webpack-plugin</h4><blockquote>
+<p>该插件的主要是为了抽离css样式,防止将样式打包在js中引起页面样式加载错乱的现象。</p>
+</blockquote>
+<p>先上干货</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">   const ExtractTextPlugin = require(&apos;extract-text-webpack-plugin&apos;);</span><br><span class="line">   </span><br><span class="line">module.exports = &#123;</span><br><span class="line">	module: &#123;</span><br><span class="line">        rules: [&#123;</span><br><span class="line">            test: /\.(less|css)$/,</span><br><span class="line">            use: ExtractTextPlugin.extract(&#123;</span><br><span class="line">                use: [&apos;css-loader&apos;, &apos;less-loader&apos;],</span><br><span class="line">                fallback: &apos;style-loader&apos;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">	plugins: [</span><br><span class="line">        new ExtractTextPlugin(&#123;</span><br><span class="line">            filename: path.resolve(__dirname, &apos;dist/css/[name].css&apos;),</span><br><span class="line">            disable: false,			//	true</span><br><span class="line">            allChunks: false</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个插件有个属性 <code>disable</code>,官方解释：禁用插件。然而我并不知道这干嘛的。但是有个很重要的地方，在开启模块热替换的时候，设置为true,分离出的css才可以不用刷新浏览器实时更新，找了好久~~~~</p>
+</blockquote>
+<h4 id="clean-webpack-plugin"><a href="#clean-webpack-plugin" class="headerlink" title="clean-webpack-plugin"></a>clean-webpack-plugin</h4><blockquote>
+<p>每次打包之前，清理一下dist文件夹。可以长期积累下的无用文件删除。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const CleanWebpackPlugin = require(&apos;clean-webpack-plugin&apos;);</span><br><span class="line"></span><br><span class="line">plugins: [</span><br><span class="line">       new CleanWebpackPlugin([&apos;dist&apos;])</span><br><span class="line">   ]</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="node服务器和webpack结合，构建本地开发环境"><a href="#node服务器和webpack结合，构建本地开发环境" class="headerlink" title="node服务器和webpack结合，构建本地开发环境"></a>node服务器和webpack结合，构建本地开发环境</h2><h3 id="两者的桥梁——中间件-webpack-dev-middleware"><a href="#两者的桥梁——中间件-webpack-dev-middleware" class="headerlink" title="两者的桥梁——中间件(webpack-dev-middleware)"></a>两者的桥梁——中间件(webpack-dev-middleware)</h3><blockquote>
+<p>还是先上干货</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// app.js</span><br><span class="line"></span><br><span class="line">const express = require(&apos;express&apos;);</span><br><span class="line">const webpack = require(&apos;webpack&apos;);</span><br><span class="line">const webpackDevMiddleware = require(&apos;webpack-dev-middleware&apos;);</span><br><span class="line">const webpackConfig = require(&apos;../webpack.config&apos;);</span><br><span class="line"></span><br><span class="line">const app = express();</span><br><span class="line">const compiler = webpack(webpackConfig);</span><br><span class="line"></span><br><span class="line">app.use(webpackDevMiddleware(compiler, &#123;</span><br><span class="line">    publicPath: webpackConfig.output.publicPath</span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">app.listen(3000, function () &#123;</span><br><span class="line">    console.log(&apos;Example app listening on port 3000!\n&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>webpack-dev-middleware</code> 是一个容器,它可以把 webpack 处理后的文件传递给一个服务器(server)。 </p>
+</blockquote>
+<h3 id="模块热替换"><a href="#模块热替换" class="headerlink" title="模块热替换"></a>模块热替换</h3><blockquote>
+<p>它允许在运行时更新各种模块，而无需进行完全刷新。</p>
+</blockquote>
+<blockquote>
+<p>前端开发的福音。webpack中内置的devServer可以快速的配置模块热替换。详见<a href="https://www.webpackjs.com/guides/hot-module-replacement/" target="_blank" rel="noopener">模块热替换</a></p>
+</blockquote>
+<p>因为本人用的express搭的node服务，所以还需要稍稍配置一下。</p>
+<blockquote>
+<p>先上干货</p>
+</blockquote>
+<p>1.<code>app.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var hotMiddleware = require(&apos;webpack-hot-middleware&apos;)(compiler, &#123;</span><br><span class="line">    log: false,</span><br><span class="line">    heartbeat: 2000</span><br><span class="line">&#125;);	</span><br><span class="line"></span><br><span class="line">app.use(hotMiddleware);</span><br></pre></td></tr></table></figure>
+<p>2.<code>webpack.config.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const webpack = require(&apos;webpack&apos;);</span><br><span class="line"></span><br><span class="line">plugins: [</span><br><span class="line">       new webpack.HotModuleReplacementPlugin()</span><br><span class="line">   ]</span><br></pre></td></tr></table></figure>
+<p>3.<code>entry</code>配置中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	entry:&#123;</span><br><span class="line">		main:[&apos;webpack-hot-middleware/client?noInfo=true&amp;reload=true&apos;,&apos;./src/main.js&apos;]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果多入口的话就是这样</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	entry:&#123;</span><br><span class="line">		main:[&apos;webpack-hot-middleware/client?noInfo=true&amp;reload=true&apos;,&apos;./src/main.js&apos;],</span><br><span class="line">		app:[&apos;webpack-hot-middleware/client?noInfo=true&amp;reload=true&apos;,&apos;./src/app.js&apos;],</span><br><span class="line">		vender:[&apos;webpack-hot-middleware/client?noInfo=true&amp;reload=true&apos;,&apos;./src/vender.js&apos;]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于我这种人，我看着这么繁琐的东西，一顿吐槽。所以，稍稍做了些处理。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const entries = &#123;</span><br><span class="line">   	main:path.resolve(__dirname, &apos;src/main.js&apos;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Object.keys(entries).forEach(function (name) &#123;</span><br><span class="line">    entries[name] = [&apos;webpack-hot-middleware/client?noInfo=true&amp;reload=true&apos;].concat(entries[name])</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这样把 <code>entries</code> 单独拿出来进行处理后，再配置，是不是清爽很多？</p>
+</blockquote>
+<blockquote>
+<p>最后执行 <code>npm run server</code>，我们在开发的时候，修改了模块的代码，会实时的在浏览器上更新。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+            <a href="/tags/react/" rel="tag"># react</a>
+          
+            <a href="/tags/express/" rel="tag"># express</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/31/Array对象方法总结-ES5/" rel="next" title="Array对象方法总结(ES5)">
+                <i class="fa fa-chevron-left"></i> Array对象方法总结(ES5)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/logo.png"
+                alt="剑剑Zz" />
+            
+              <p class="site-author-name" itemprop="name">剑剑Zz</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从package-json开始"><span class="nav-number">1.1.</span> <span class="nav-text">从package.json开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建工程目录"><span class="nav-number">1.2.</span> <span class="nav-text">创建工程目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖"><span class="nav-number">1.3.</span> <span class="nav-text">安装依赖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个基本的-Express-应用"><span class="nav-number">2.</span> <span class="nav-text">创建一个基本的 Express 应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack基本配置"><span class="nav-number">3.</span> <span class="nav-text">webpack基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack最重要的就是入口和出口的配置了吧！"><span class="nav-number">3.1.</span> <span class="nav-text">webpack最重要的就是入口和出口的配置了吧！</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#入口-entry"><span class="nav-number">3.1.1.</span> <span class="nav-text">入口(entry)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输出-output"><span class="nav-number">3.1.2.</span> <span class="nav-text">输出(output)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#loader"><span class="nav-number">3.1.3.</span> <span class="nav-text">loader</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个项目开发必备插件【plugins】"><span class="nav-number">3.2.</span> <span class="nav-text">几个项目开发必备插件【plugins】</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#html-webpack-plugin"><span class="nav-number">3.2.1.</span> <span class="nav-text">html-webpack-plugin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#extract-text-webpack-plugin"><span class="nav-number">3.2.2.</span> <span class="nav-text">extract-text-webpack-plugin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clean-webpack-plugin"><span class="nav-number">3.2.3.</span> <span class="nav-text">clean-webpack-plugin</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node服务器和webpack结合，构建本地开发环境"><span class="nav-number">4.</span> <span class="nav-text">node服务器和webpack结合，构建本地开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两者的桥梁——中间件-webpack-dev-middleware"><span class="nav-number">4.1.</span> <span class="nav-text">两者的桥梁——中间件(webpack-dev-middleware)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块热替换"><span class="nav-number">4.2.</span> <span class="nav-text">模块热替换</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">剑剑Zz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
