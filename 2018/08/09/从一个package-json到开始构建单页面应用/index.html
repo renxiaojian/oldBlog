@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="准备工作从package.json开始1npm init 创建工程目录 src               //源文件  components       //组件page             //页面、布局组件router           //路由views            //视图模板package.jsonwebpack.config.js">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-11T14:12:31.010Z">
+<meta property="og:updated_time" content="2018-08-28T13:17:09.984Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从一个package.json到开始构建单页面应用">
 <meta name="twitter:description" content="准备工作从package.json开始1npm init 创建工程目录 src               //源文件  components       //组件page             //页面、布局组件router           //路由views            //视图模板package.jsonwebpack.config.js">
@@ -436,8 +436,12 @@
 <p>先上干货</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">   const ExtractTextPlugin = require(&apos;extract-text-webpack-plugin&apos;);</span><br><span class="line">   </span><br><span class="line">module.exports = &#123;</span><br><span class="line">	module: &#123;</span><br><span class="line">        rules: [&#123;</span><br><span class="line">            test: /\.(less|css)$/,</span><br><span class="line">            use: ExtractTextPlugin.extract(&#123;</span><br><span class="line">                use: [&apos;css-loader&apos;, &apos;less-loader&apos;],</span><br><span class="line">                fallback: &apos;style-loader&apos;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">	plugins: [</span><br><span class="line">        new ExtractTextPlugin(&#123;</span><br><span class="line">            filename: path.resolve(__dirname, &apos;dist/css/[name].css&apos;),</span><br><span class="line">            disable: false,			//	true</span><br><span class="line">            allChunks: false</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>这个插件有个属性 <code>disable</code>,官方解释：禁用插件。然而我并不知道这干嘛的。但是有个很重要的地方，在开启模块热替换的时候，设置为true,分离出的css才可以不用刷新浏览器实时更新，找了好久~~~~</p>
+<p>这个插件有个属性 <code>disable</code>,官方解释：禁用插件。设置为false,会启用此插件，分离出CSS；设置为true，禁用此插件，CSS不会分离。模块热替换更新的是bundle.js，所以设置为false，不会实时跟新CSS，要想在开发中分离css，并且实时更新CSS。用到一个 <code>css-hot-loader</code> </p>
 </blockquote>
+<blockquote>
+<p>配置如下：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rules:[&#123;</span><br><span class="line">       test: /\.(less|css)$/,</span><br><span class="line">       use: [&apos;css-hot-loader&apos;].concat(ExtractTextPlugin.extract(&#123;</span><br><span class="line">           use: [&apos;css-loader&apos;, &apos;less-loader&apos;],</span><br><span class="line">           fallback: &apos;style-loader&apos;</span><br><span class="line">       &#125;))</span><br><span class="line">   &#125;]</span><br></pre></td></tr></table></figure>
 <h4 id="clean-webpack-plugin"><a href="#clean-webpack-plugin" class="headerlink" title="clean-webpack-plugin"></a>clean-webpack-plugin</h4><blockquote>
 <p>每次打包之前，清理一下dist文件夹。可以长期积累下的无用文件删除。</p>
 </blockquote>
